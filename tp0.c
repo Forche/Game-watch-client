@@ -33,7 +33,7 @@ int main(void)
 
 	//enviar mensaje
 
-	enviar_mensaje("virus chino", conexion);
+	enviar_mensaje("Odio los punteros, y odio a Dua Lipa", conexion);
 
 	//recibir mensaje
 
@@ -47,7 +47,7 @@ int main(void)
 //TODO
 t_log* iniciar_logger(void)
 {
-	return log_create("tp1.log", "game-watch", true, LOG_LEVEL_INFO);
+	return log_create("pruebita.log", "game-watch", true, LOG_LEVEL_INFO);
 }
 
 //TODO
