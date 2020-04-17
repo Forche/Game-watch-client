@@ -50,7 +50,7 @@ int crear_conexion(char* ip, char* puerto)
 //TODO
 void enviar_mensaje(char* mensaje, int socket_cliente)
 {
-	t_mensaje* ptr_paqueteMensaje = (t_mensaje*) malloc(sizeof(t_mensaje));
+	t_mensaje* ptr_paqueteMensaje = malloc(sizeof(t_mensaje));
 	ptr_paqueteMensaje->msg_len = strlen(mensaje) + 1;
 	ptr_paqueteMensaje->msg = mensaje;
 	t_mensaje paqueteMensaje = (*ptr_paqueteMensaje);
@@ -76,7 +76,9 @@ void enviar_mensaje(char* mensaje, int socket_cliente)
 
 	void* a_enviar = serializar_paquete(paquete, &(bytes_a_enviar));
 
-	send(socket_cliente, a_enviar, sizeof(op_code) + buffer->size + sizeof(int), 0);
+	int size = sizeof(op_code) + buffer->size + sizeof(int);
+
+	send(socket_cliente, a_enviar, size, 0);
 
 	free(a_enviar);
 	free(paquete->buffer->stream);
@@ -90,11 +92,12 @@ char* recibir_mensaje(int socket_cliente)
 	// malloc para obtener lugar en memoria para la info
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 	paquete->buffer = malloc(sizeof(t_buffer));
-	paquete->buffer->stream = malloc(paquete->buffer->size);
+
 
 	// Meto info en las posiciones de memoria que obtuve antes
 	recv(socket_cliente, &(paquete->codigo_operacion), sizeof(op_code), 0);
 	recv(socket_cliente, &(paquete->buffer->size), sizeof(int), 0);
+	paquete->buffer->stream = malloc(paquete->buffer->size);
 	recv(socket_cliente, paquete->buffer->stream, paquete->buffer->size, 0);
 
 	char* msg;

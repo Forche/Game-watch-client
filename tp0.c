@@ -33,13 +33,16 @@ int main(void)
 
 	//enviar mensaje
 
-	enviar_mensaje("Odio los punteros, y odio a Dua Lipa", conexion);
+	char * mensajito = "Odio a Dua Lipa, y también a los punteros y al nombre Iñaki.";
+	enviar_mensaje(mensajito, conexion);
 
 	//recibir mensaje
 
 	char* mensajeRecibido = recibir_mensaje(conexion);
 	//loguear mensaje recibido
 	log_info(logger, mensajeRecibido);
+
+	free(mensajeRecibido);
 
 	terminar_programa(conexion, logger, config);
 }
